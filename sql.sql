@@ -6,15 +6,16 @@ password VARCHAR(15),
 userType VARCHAR(15),
 created_At DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
 );
+
+BEGIN TRANSACTION
 INSERT INTO USER_LOGIN(userId, mobileNumber, password, userType) VALUES ('admin', '8778613988', 'admin', 'Admin');
+COMMIT TRANSACTION
 
 DROP TABLE USER_LOGIN
-
-
-
 Select * from USER_LOGIN
 
 UPDATE USER_LOGIN SET userType = 'HotelOwner' WHERE userType = 'Hotel Owner'
+
 
 CREATE PROCEDURE REGISTRATION
 @userId VARCHAR(15),
@@ -91,3 +92,24 @@ drop procedure STORED_PROCEDURE
 DROP PROCEDURE STORED_PROCEDURE_SELECT
 DROP PROCEDURE STORED_PROCEDURE_DELETE
 
+
+CREATE TABLE Voter_List
+(
+voterId VARCHAR(10) PRIMARY KEY NOT NULL,
+name VARCHAR(15) NOT NULL,
+mobileNumber VARCHAR(15) UNIQUE,
+age numeric(2),
+);
+INSERT INTO Voter_List (voterId,name,mobileNumber,age) VALUES('1656465456','Gowtham','9876543210',20)
+INSERT INTO Voter_List (voterId,name,mobileNumber,age) VALUES('1656465451','Kowsalya','9876543216',16)
+INSERT INTO Voter_List (voterId,name,mobileNumber,age) VALUES('1656465450','Priya','9876543219',21)
+
+
+SELECT voterId,name,mobileNumber,age,
+CASE
+    WHEN age >= 18 THEN 'Eligible for Voting'
+    ELSE 'Not eligible'	
+END AS QuantityText
+FROM Voter_List;
+
+DROP TABLE Voter_List
